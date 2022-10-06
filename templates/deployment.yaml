@@ -12,7 +12,8 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.name }}
-      name: {{ .Values.name }}
+      environment: {{ .Values.environment }}
+      appVersion: {{ .Values.appVersion }}
   template:
     metadata:
       annotations:
@@ -24,13 +25,9 @@ spec:
         environment: {{ .Values.environment }}
         appVersion: {{ .Values.appVersion }}
     spec:
-      nodeSelector:
-        agentpool: default
       containers:
         - name: {{ .Values.name }}
-          # {{- $tag := (.Values.deployment.tag | default .Values.appVersion) }}
-          # {{- $url := (.Values.deployment.url | default .Values.containerRegistry.url) }}
-          image: image-example 
+          image: silassennac4/api-node-k8s:latest
           readinessProbe:
             {{- if .Values.deployment.commandCheck }}
             exec:
@@ -68,8 +65,7 @@ spec:
             failureThreshold: 3
             timeoutSeconds: 10
           ports:
-            - name: http
-              containerPort: {{ .Values.deployment.containerPort | default "80" }}
+            - containerPort: {{ .Values.deployment.containerPort | default "80" }}
           imagePullPolicy: Always
           
           resources:

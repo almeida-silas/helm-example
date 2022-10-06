@@ -1,16 +1,11 @@
 name: helm-example
 system: example
-environment: prod
+environment: dev
 namespace: default
 appVersion: latest
 
-# containerRegistry:
-#   url: 
-#   # repository: 
-
 deployment:
-  # repository:
-  scheduling: true
+  scheduling: false
   resources:
     requests:
       memory: 256Mi
@@ -18,8 +13,9 @@ deployment:
       memory: 256Mi
 
 hpa:
-  minReplicas: 2
-  maxReplicas: 2
+  minReplicas: 1
+  maxReplicas: 1
 
 envs:
   DEBUG: false
+  PORT: 80

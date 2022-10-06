@@ -8,9 +8,8 @@ metadata:
     environment: {{ .Values.environment }}
     appVersion: {{ .Values.appVersion }}
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - name: http
-      port: 80
+    - port: 80
       targetPort: 80
       protocol: TCP
